@@ -1,18 +1,11 @@
 Package: bkt
 Type: Package
-Title: Functions for fitting Bayesian Knowledge Tracing (BKT) models from data
-Version: 0.1
-Date: 2013-03-21
-Author: Tristan Nixon <tnixon@carnegielearning.com>, Michael Yudelson
-    <myudelson@carnegielearning.com>
-Maintainer: Tristan Nixon <tnixon@carnegielearning.com>
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Author: Who wrote it
+Maintainer: The package maintainer <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
-License: CC BY-SA 3.0
-Depends:
-    foreach
-Collate:
-    'logprob_ops.R'
-    'bkt-bforce.R'
-    'bkt-hmm.R'
-    'bkt.R'
-    'bkt-sim.r'
+    Use four spaces when indenting paragraphs within the Description.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true

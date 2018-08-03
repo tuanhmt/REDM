@@ -1,3 +1,10 @@
+bkt.carefulness.stu <- function(data.stu, threshold = 3, result = 0.5) {
+  result = lapply(data.stu, function(x) apply(x, 1, function(x) bkt.carefulness.obs(x)))
+  result = lapply(result, mean)
+  
+  return(result)
+}
+
 #' Calculate the carefulness of a student according to the given obs sequence
 #'
 #' @param obs an obs vector
@@ -28,17 +35,5 @@ bkt.carefulness.obs <- function(obs.seq, threshold = 3,  result = 0.5) {
       }
     }
   }
-  result
-}
-
-bkt.carefulness.stu <- function(data.stu, threshold = 3, result = 0.5) {
-  result = lapply(data.stu, function(x) apply(x, 1, function(x) bkt.carefulness.obs(x)))
-  result = lapply(result, mean)
-  
-  result
-}
-
-bkt.effort <- function(obs.seq, threshold = 3, result = 0.5) {
-  
-  result
+  return(result)
 }

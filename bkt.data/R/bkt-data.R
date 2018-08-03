@@ -125,10 +125,10 @@ as.bkt.data <- function(data, minStu = 10, minOppr = 10, first = 'kc') {
   
   # just keep only obs col
   mrt.data = lapply(mrt.data, function(x) lapply(x, function(y) y$obs))
-  mrt.data = lapply(mrt.data, function(x) lapply(x, t))
-  mrt.data = lapply(mrt.data, function(x) lapply(x, as.data.table))
-  mrt.data = lapply(mrt.data, function(x) list(rbindlist(x, fill = TRUE), names(x)))
-  mrt.data = lapply(mrt.data, function(x) {tmp = as.data.frame(x[[1]]); row.names(tmp) = x[[2]]; tmp})
+  # mrt.data = lapply(mrt.data, function(x) lapply(x, t))
+  # mrt.data = lapply(mrt.data, function(x) lapply(x, as.data.table))
+  # mrt.data = lapply(mrt.data, function(x) list(rbindlist(x, fill = TRUE), names(x)))
+  # mrt.data = lapply(mrt.data, function(x) {tmp = as.data.frame(x[[1]]); row.names(tmp) = x[[2]]; tmp})
   # mrt.data = lapply(mrt.data, function(x) lapply(names(x), as.data.table))
   
   return(mrt.data)
