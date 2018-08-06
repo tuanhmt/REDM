@@ -8,6 +8,4 @@ Description: A collection of tools helps you to work with BKT model
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-Imports:
-    dplyr,
-    data.table
+Depends: R (>= 3.5.0), data.table (>= 1.11.4), dplyr (>= 0.7.6), HMM
