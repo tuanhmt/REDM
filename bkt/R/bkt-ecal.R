@@ -8,8 +8,9 @@
 #' @export
 #'
 #' @examples
-bkt.carefulness.stu <- function(data.stu, threshold = 3, result = 0.5) {
-  result = lapply(data.stu, function(x) apply(x, 1, function(x) bkt.carefulness.obs(x)))
+bkt.care.stu <- function(data.stu, threshold = 3, result = 0.5) {
+  result = lapply(data.stu, function(x) lapply(x, function(x) bkt.care.obs(x)))
+  result = lapply(result, unlist)
   result = lapply(result, mean)
 
   return(result)
@@ -25,7 +26,7 @@ bkt.carefulness.stu <- function(data.stu, threshold = 3, result = 0.5) {
 #' @export
 #'
 #' @examples bkt.carefulness.obs(c(0,1,1,1,0,1)) -> 0.5
-bkt.carefulness.obs <- function(obs.seq, threshold = 3,  result = 0.5) {
+bkt.care.obs <- function(obs.seq, threshold = 3,  result = 0.5) {
   obs.seq = obs.seq[!is.na(obs.seq)]
   obs.seq = paste(obs.seq, collapse = "")
   n.obs = nchar(obs.seq)
