@@ -48,3 +48,31 @@ bkt.care.obs <- function(obs.seq, threshold = 3,  result = 0.5) {
   }
   return(result)
 }
+
+bkt.effort.obs <- function(obs.seq, threshold = 3,  result = 0.5) {
+  obs.seq = obs.seq[!is.na(obs.seq)]
+  obs.seq = paste(obs.seq, collapse = "")
+  n.obs = nchar(obs.seq)
+  # the given obs.seq must be longer than matched string
+  if (n.obs > threshold) {
+    m.seq = paste(rep('1', threshold), collapse = "")
+    pos = regexpr(m.seq, obs.seq)[1]
+    if (pos != -1) {
+      obs.seq = substr(obs.seq, pos, n.obs)
+      total = nchar(obs.seq) - threshold
+      if (total > 0) {
+        wrong.pos = unlist(gregexpr("0", obs.seq))
+        freq = 0
+        if (wrong.pos[1] != -1)
+          freq = length(wrong.pos)
+        result = 1 - freq / total
+      }
+    }
+  }
+  return(result)
+}
+
+bkt.reduce.grid <- function(grid.params, sec) {
+  mean.slip = 1 - (mean(unlist(sec)))
+  mean.slip
+}

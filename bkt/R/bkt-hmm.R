@@ -10,6 +10,8 @@ bkt.initHMM <- function (params) {
                   c( params$slip, 1.0 - params$slip ) ) )
 }
 
+
+# convert seq from 0,1 to 1,2 for easy calculate log
 bkt.convert.seq <- function (seq) {
   seq = replace(seq, seq == 1, 2)
   seq = replace(seq, seq == 0, 1)
