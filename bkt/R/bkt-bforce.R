@@ -65,6 +65,6 @@ bkt.bforce.search <- function( opps, search.grid=bkt.bforce.search.grid(), fit.m
   else
     bf$best.fit = max(bf$fits)
 
-  bf$best.params = as.bkt.params(bf$search.grid[ bf$fits == bf$best.fit ])
+  bf$best.params = bkt.as.params(bf$search.grid[ bf$fits == bf$best.fit ])
   bf
 }

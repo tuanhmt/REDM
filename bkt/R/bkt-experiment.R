@@ -29,7 +29,7 @@ bkt.ex <- function(data, stu.care) {
 }
 
 bkt.ex.bf.mean <- function(bf) {
-  mean(unlist(lapply(bf, function(x) x$best.fit)))
+  list(rmse = mean(unlist(lapply(bf, function(x) x$best.fit))), time = mean(unlist(lapply(bf, function(x) x$cost[["user.self"]]))))
 }
 
 bkt.kdd.params <- function(data.info = bkt.data.info.params(), filter.params = bkt.filter.params()) {

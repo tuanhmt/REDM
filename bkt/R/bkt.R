@@ -25,7 +25,7 @@
 #'   \item slip
 #' }
 #' @export
-as.bkt.params <- function(p, round.params = T)
+bkt.as.params <- function(p, round.params = T)
 {
   if(is.list(p))
     kt.params = as.data.table(p)
@@ -46,7 +46,7 @@ as.bkt.params <- function(p, round.params = T)
 #'@export
 bkt.random.params <- function()
 {
-  as.bkt.params(list(init=runif(1), learn=runif(1), guess=runif(1,0,0.5), slip=runif(1,0,0.5)))
+  bkt.as.params(list(init=runif(1), learn=runif(1), guess=runif(1,0,0.5), slip=runif(1,0,0.5)))
 }
 
 #' distance between two BKT parameter vectors
