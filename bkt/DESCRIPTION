@@ -10,7 +10,7 @@ Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.5.0), data.table (>= 1.11.4), dplyr (>= 0.7.6), tidyr (>= 0.8.1)
 Imports:
-    data.table, 
+    data.table,
     dplyr,
     tidyr
 RoxygenNote: 6.1.0
