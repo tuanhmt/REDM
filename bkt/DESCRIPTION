@@ -1,6 +1,6 @@
-Package: bkt
+Package: tBKT
 Type: Package
-Title: Baysian Knowlegde Tracing (BKT)
+Title: Baysian Knowlegde Tracing (tBKT)
 Version: 1.0
 Author: MRT
 Maintainer: The package maintainer <tuanhcmup@gmail.com>

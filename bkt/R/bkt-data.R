@@ -130,3 +130,22 @@ bkt.data <- function(data.info = bkt.data.info.params(), filter.params = bkt.fil
   cat("Done !!! ... \n")
   return(mrt.data)
 }
+
+
+#' Example KDD Data Params
+#'
+#' @param data.info
+#' @param filter.params
+#'
+#' @return
+#' @export
+#'
+#' @examples
+bkt.kdd.params <- function(data.info = bkt.data.info.params(), filter.params = bkt.filter.params()) {
+  data.params = list(filter = filter.params)
+  if (data.info$year == '2004-2005') {
+    data.info$cols = c(2,4,6,11,14,15,16,18,19)
+  }
+  data.params$data.info = data.info
+  data.params
+}
