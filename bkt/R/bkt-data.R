@@ -2,7 +2,7 @@
 # ITS Data Preprocessing Tool. Copyright (C) 2018
 # Based on REDM project (http://www.educationaldatamining.org/). Power by R language.
 #
-# Tuan Hoang - Junior Researcher
+# Tuan Hoang - Kid Researcher
 # Email: tuanhcmup@gmail.com, tuan.hmt@outlook.com
 # University of Science, HCM City, Vietnam
 ##########################################################################################################
@@ -72,14 +72,6 @@ bkt.data.prep <- function(data.info = bkt.data.info.params()) {
   mrt.data = transform(mrt.data, oppr = as.numeric(oppr))
   Sys.sleep(0.01)
 
-  # ordering obs by kc, stu & oppr
-  cat("[7] Ordering columns ... \n")
-  if (data.info$base == 'kc')
-    mrt.data = mrt.data[order(kc, stu, oppr)]
-  else
-    mrt.data = setorderv(mrt.data, c(data.info$base, 'kc', 'oppr'))
-  Sys.sleep(0.01)
-
   return(mrt.data)
 }
 
@@ -94,9 +86,15 @@ bkt.data.prep <- function(data.info = bkt.data.info.params()) {
 #' @export
 #'
 #' @examples
-bkt.data <- function(data.info = bkt.data.info.params(), filter.params = bkt.filter.params()) {
-  # convert data to list skills
-  data = bkt.data.prep(data.info)
+bkt.data <- function(data.prep, data.info = bkt.data.info.params(), filter.params = bkt.filter.params()) {
+  mrt.data = data.prep
+  # ordering obs by kc, stu & oppr
+  cat("[7] Ordering columns ... \n")
+  if (data.info$base == 'kc')
+    data = mrt.data[order(kc, stu, oppr)]
+  else
+    data = setorderv(mrt.data, c(data.info$base, 'kc', 'oppr'))
+  Sys.sleep(0.01)
 
   # Return tidy data
   cat("[8] Converting to list !!! ... \n")

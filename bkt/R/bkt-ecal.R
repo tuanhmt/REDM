@@ -35,11 +35,11 @@ bkt.ecal.stu <- function(stu.data, threshold = 3) {
 
 #' Calculate the carefulness of a student according to the given obs sequence
 #'
-#' @param obs an obs vector
+#' @param obs.seq an obs vector
 #' @param threshold required number of consecutive correct responses which each of students needs to master a skill
 #' @param result default carefulness
 #'
-#' @return the carefulness of student
+#' @return the ecal of student
 #' @export
 #'
 #' @examples bkt.carefulness.obs(c(0,1,1,1,0,1)) -> 0.5
@@ -103,29 +103,4 @@ bkt.ecal.obs <- function(obs.seq, threshold = 3) {
     }
   }
   return(result)
-}
-
-
-
-bkt.reduce.grid <- function(grid.params, sec) {
-  mean.slip = 1 - (mean(unlist(sec)))
-  mean.slip
-}
-
-bkt.as.stu.mean.params <- function(bkt, stu.care) {
-  if (!is.null(stu.care))
-    bkt$slip = mean(bkt$slip, (1 - stu.care))
-  bkt
-}
-
-bkt.as.stu.regression.params <- function(bkt, stu.care) {
-  if (!is.null(stu.care))
-    bkt$slip = (bkt$slip * (1 - stu.care)) / (bkt$slip * (1 - stu.care) + (1 - bkt$slip))
-  bkt
-}
-
-bkt.as.stu.replace.params <- function(bkt, stu.care) {
-  if (!is.null(stu.care))
-    bkt$slip = (1 - stu.care)
-  bkt
 }
