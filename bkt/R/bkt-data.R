@@ -147,3 +147,16 @@ bkt.kdd.params <- function(data.info = bkt.data.info.params(), filter.params = b
   data.params$data.info = data.info
   data.params
 }
+
+#' Title
+#'
+#' @param bkt.data
+#' @param ratio
+#'
+#' @return
+#' @export
+#'
+#' @examples
+bkt.generate.trainset <- function(bkt.data, ratio = 2) {
+  lapply(bkt.data, function(x) lapply(x, function(y) head(y, as.integer(length(y) / ratio) * (ratio - 1))))
+}

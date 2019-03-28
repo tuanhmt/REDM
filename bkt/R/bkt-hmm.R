@@ -1,6 +1,6 @@
 # convert hmm to bkt params
 bkt.hmm.to.bkt <- function (hmm) {
-  bkt.as.params(c(init=as.numeric(hmm$startProbs[2]),
+  as.bkt.params(c(init=as.numeric(hmm$startProbs[2]),
                     learn=as.numeric(hmm$transProbs[1,2]),
                     guess=as.numeric(hmm$emissionProbs[1,2]),
                     slip=as.numeric(hmm$emissionProbs[2,1])))
@@ -8,12 +8,12 @@ bkt.hmm.to.bkt <- function (hmm) {
 
 # convert bkt to hmm params
 # assumption that the knowlegde is unforgetable so mastered to unmasterd is zero
-bkt.to.hmm <- function(params=bkt.random.params())
+bkt.to.hmm <- function(params=random.params())
 {
   if(!is.vector(params))
-    params = bkt.as.params(params)
-  bkt.init.hmm(c("unmastered","mastered"),
-           c("1","2"),
+    params = as.bkt.params(params)
+  bkt.init.hmm(c("unmastered", "mastered"),
+           c("0","1"),
            c(1.0 - params$init, params$init),
            rbind(c(1.0 - params$learn, params$learn),
                   c(0, 1.0)),
@@ -96,8 +96,8 @@ backward <- function(hmm, observation) {
 }
 
 bkt.hmm.fit <- function(hmm = bkt.to.hmm(), observation, maxIterations=100, delta=1E-9) {
-  bw = baumWelch(hmm, observation, maxIterations, delta)
-  return(bkt.hmm.to.bkt(bw$hmm))
+  bw = baumWelch(hmm = hmm, observation = observation, maxIterations = maxIterations, delta = delta)
+  list(numiter = length(bw$difference), bkt.params = bkt.hmm.to.bkt(bw$hmm))
 }
 
 #log likelihood calculating with each of observation
@@ -117,7 +117,7 @@ bkt.hmm.ll <- function(hmm, observation)
   ll
 }
 
-baumWelch = function(hmm, observation, maxIterations=100, delta=1E-9 ) {
+baumWelch = function(hmm, observation, maxIterations=100, delta=1E-9) {
   tempHmm = hmm
   na.trans = is.na(hmm$transProbs)
   tempHmm$transProbs[ na.trans ]       = 0
@@ -126,6 +126,7 @@ baumWelch = function(hmm, observation, maxIterations=100, delta=1E-9 ) {
   na.start = is.na(hmm$startProbs)
   tempHmm$startProbs[ na.start ] = 0
   diff = c()
+  # loop to find hmm
   for(i in 1:maxIterations)
   {
     #print(paste("iteration",i))
@@ -136,13 +137,17 @@ baumWelch = function(hmm, observation, maxIterations=100, delta=1E-9 ) {
       sqrt(sum((tempHmm$emissionProbs - newHmm$emissionProbs)^2)) +
       sqrt(sum((tempHmm$startProbs - newHmm$startProbs)^2))
     diff = c(diff, d)
+    if (is.na(d)) {
+      print('sdf')
+    }
     # print(paste("iteration:",i,"diff:",d))
     tempHmm = newHmm
-    if(d < delta)
+    if (d < delta)
     {
       break
     }
   }
+
   tempHmm$transProbs[ na.trans ] = NA
   tempHmm$emissionProbs[ na.emit ] = NA
   tempHmm$startProbs[ na.start ] = NA
@@ -189,7 +194,9 @@ bwEx = function( hmm, observation )
       return( bw.to.hmm( bwIter( hmm, as.character(observation[[1]][!is.na(observation[[1]])]) ), hmm))
     else
       n_seq = length(observation)
-  } else if(is.vector(observation) || dim(observation)[1] < 2 || length(dim(observation)) < 2)
+  } else if(is.vector(observation)) {
+      return( bw.to.hmm( bwIter( hmm, as.character(observation[!is.na(observation)]) ), hmm))
+  } else if (dim(observation)[1] < 2 || length(dim(observation)) < 2)
     return( bw.to.hmm( bwIter( hmm, as.character(observation[!is.na(observation)]) ), hmm))
   else
     n_seq = dim(observation)[1]
@@ -197,7 +204,7 @@ bwEx = function( hmm, observation )
   logweight = 0.0 # = log(1.0)
   logStartNormalizer = -Inf
   for( j in 1:n_seq ){
-    seq = bkt.convert.seq(observation[[j]])
+    seq = observation[[j]]
     seq = as.character(seq[!is.na(seq)])
     if( length(seq) < 2 )
       next
@@ -261,5 +268,8 @@ bwIter = function( hmm, observation )
   }
   # initial state probabilities
   bw$logStart = gamma[,1]
+  # if (any(is.na(bw$logTransNumer - bw$logTransDenom)) || any(is.na(bw$logEmitNumer - bw$logEmitDenom))) {
+  #   bw = bwIter(bkt.to.hmm(), observation)
+  # }
   bw
 }
